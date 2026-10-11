@@ -2,10 +2,9 @@ services:
   - type: web
     name: construction-scope-demo-api
     runtime: python
-    plan: starter
+    plan: free
     buildCommand: pip install -r backend/requirements.lock.txt
-    preDeployCommand: python backend/preflight.py && APP_ENV=development TEST_DATABASE_URL="$DATABASE_URL" python -m pytest backend -q
-    startCommand: uvicorn app:app --app-dir backend --host 0.0.0.0 --port $PORT --workers 1 --no-access-log --no-proxy-headers
+    startCommand: python backend/preflight.py && uvicorn app:app --app-dir backend --host 0.0.0.0 --port $PORT --workers 1 --no-access-log --no-proxy-headers
     healthCheckPath: /health
     autoDeployTrigger: off
     envVars:
@@ -29,5 +28,5 @@ services:
         sync: false
 databases:
   - name: construction-scope-demo-db
-    plan: basic-256mb
+    plan: free
     ipAllowList: []

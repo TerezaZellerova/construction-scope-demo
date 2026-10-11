@@ -24,3 +24,11 @@ Outstanding gates:
 - No real InQI integration or live AI provider calls are verified. Public configuration is fixture-only.
 
 Local URLs: http://127.0.0.1:5173/ and http://127.0.0.1:8000/health. These are not public deployment URLs. Details and deployment gates: `DEPLOYMENT.md`.
+
+## GitHub PostgreSQL verification — 2026-10-11
+
+Commit `1b0c7b0187def302e860148a94e245b595c16db4`: PostgreSQL 16 backend suite **21 passed, 2 warnings in 4.88s**. Dependency consistency passed; no known Python vulnerabilities found. Frontend frozen installation, audit, and build passed.
+
+Run: https://github.com/TerezaZellerova/construction-scope-demo/actions/runs/38152774621
+
+Free temporary Render PostgreSQL created, expires November 10, 2026. Vercel project created; neither application deployment nor deployed end-to-end workflow verified yet.
