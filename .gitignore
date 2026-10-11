@@ -1,0 +1,12 @@
+.venv/
+node_modules/
+dist/
+__pycache__/
+.pytest_cache/
+*.sqlite3*
+.env
+.vercel/
+.env.*
+!.env.example
+*.log
+.demo-access.json
