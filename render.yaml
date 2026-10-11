@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: construction-scope-demo-api
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r backend/requirements.lock.txt
+    preDeployCommand: python backend/preflight.py && APP_ENV=development TEST_DATABASE_URL="$DATABASE_URL" python -m pytest backend -q
+    startCommand: uvicorn app:app --app-dir backend --host 0.0.0.0 --port $PORT --workers 1 --no-access-log --no-proxy-headers
+    healthCheckPath: /health
+    autoDeployTrigger: off
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: APP_ENV
+        value: production
+      - key: AI_PROVIDER
+        value: fixture
+      - key: DATABASE_URL
+        fromDatabase:
+          name: construction-scope-demo-db
+          property: connectionString
+      - key: SESSION_SECRET
+        sync: false
+      - key: DEMO_ACCESS_HASHES_JSON
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
+      - key: MCP_ACCESS_HASHES_JSON
+        sync: false
+databases:
+  - name: construction-scope-demo-db
+    plan: basic-256mb
+    ipAllowList: []
