@@ -2,7 +2,9 @@
 
 An InQI-inspired standalone engineering interview demonstration. React, TypeScript and Vite frontend; FastAPI backend; official MCP Python SDK; persistent PostgreSQL for deployment. Three fictional projects have different users and synthetic documents. No actual InQI integration or independently verified live AI is claimed.
 
-**Deployment status: not deployed.** Security changes have local verification; PostgreSQL and deployed checks are still required. See [DEPLOYMENT.md](DEPLOYMENT.md) for exact gates, Vercel/Render configuration and remaining limitations.
+**Live fixture demonstration:** https://construction-scope-demo.vercel.app
+
+Backend: https://construction-scope-demo-api.onrender.com/health. PostgreSQL CI and deployed API/browser workflows passed on October 11, 2026. Private access codes are required; never commit them. Free backend may cold-start; database expires November 10, 2026. See [DEPLOYMENT.md](DEPLOYMENT.md) for setup and limitations.
 
 ## Local setup
 

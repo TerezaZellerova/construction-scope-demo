@@ -1,34 +1,31 @@
-# Current verification — public-demo preparation, 11 October 2026
+# Executed verification — October 11, 2026
 
-**Status: NOT DEPLOYED. PostgreSQL/deployed gates are incomplete. No live URLs exist.**
+## Live environment
 
-Executed against the updated source:
+- Frontend: https://construction-scope-demo.vercel.app
+- Backend health: https://construction-scope-demo-api.onrender.com/health
+- Render service: `srv-db5rl24s728c738qdfhg`, Frankfurt, free plan.
+- PostgreSQL 16: `dpg-db5r0a8473hc73c41m70-a`, free plan, private connections only; expires November 10, 2026.
+- Application commit: `6095624e5039c3c6db70356fdc0941e381a52682`.
+- Vercel deployment: `dpl_B1UfjJb8K3mMurKcQghCh3bvyipD`, READY.
+- Render deployment: `dep-db5rlsvg0jfs73bkhvbg`, live.
 
-- Entire offline backend suite: **21 passed in 1.72s**, including real MCP stdio protocol calls, authorization denial, membership revocation, human approval, concurrent save retries, session expiry/tampering, credential separation, persistent rate limits, generation quota, streamed-body limits and production configuration rejection.
-- One upstream Pydantic Settings warning about MCP's lifespan annotation; MCP initialization and tools still pass.
-- `pip check`: no broken requirements.
-- Backend locked-dependency audit: **no known vulnerabilities found**. Output: `python-audit-final.json`.
-- Frontend dependency audit: **zero advisories**. Output: `frontend-audit-final.json`.
-- TypeScript + Vite 6.4.3 production build: **passed**, 28 modules, 571ms.
-- Backend upgraded to patched MCP 1.28.1, FastAPI 0.143.0, Starlette 1.7.0, PyJWT 2.15.1 and current locked compatible dependencies. Original vulnerable pins are superseded.
-- Local browser executed private login as Alice, project selection, document review, fixture generation, human-channel approval, save and same-key retry. Report f5af0653-011e-4892-82c1-bdb7d3bf8371 stayed unchanged. Retry after backend restart also preserved this ID.
-- Screenshot `secure-local-demo.jpg` shows **localhost only**. No deployed-browser result is claimed.
-- Local source/build/staged-file scan found none of the generated access codes, signing secret or credential hashes in the tracked deliverables. Private `.env`, `.demo-access.json` and databases are excluded from Git/archive.
+## Automated verification
 
-Outstanding gates:
+The exact application commit passed GitHub CI: https://github.com/TerezaZellerova/construction-scope-demo/actions/runs/38153077979
 
-- Local PostgreSQL startup could not run: the macOS execution sandbox denied PostgreSQL's `shmget` shared-memory operation. PostgreSQL tests therefore have **not passed**. The suite can run through `TEST_DATABASE_URL` and GitHub CI's PostgreSQL 16 service; both remain unexecuted here.
-- GitHub, Vercel and Render integrations were confirmed not installed/connected. A local Git repository was initialized and prepared, but no remote repository was created/pushed.
-- Render blueprint and Vercel config are prepared but not provisioned or accepted by the providers.
-- Remote API smoke checks, deployed-browser workflow, live URLs, edge/TLS configuration and persistent Render storage remain unverified.
-- No real InQI integration or live AI provider calls are verified. Public configuration is fixture-only.
+Backend: 21 tests against PostgreSQL 16, including real official MCP SDK stdio initialization and tool calls, cross-project denials, human-approval gating, and concurrent idempotent saves. The preceding identical backend run recorded 21 passed, 2 warnings in 4.88s. Dependency consistency and Python vulnerability audit passed. Frontend frozen dependency install, audit, TypeScript check and Vite build passed.
 
-Local URLs: http://127.0.0.1:5173/ and http://127.0.0.1:8000/health. These are not public deployment URLs. Details and deployment gates: `DEPLOYMENT.md`.
+The deployed `checks/deployed_api.py` passed: fixture/synthetic health metadata; unauthenticated access denied; Alice sees only Harbor; Cedar/Quarry reads denied; document retrieval; fixture generation; save blocked before approval; human approval; same-key save retry returns identical report; changed-key duplicate rejected; production docs disabled; no-store response headers.
 
-## GitHub PostgreSQL verification — 2026-10-11
+## Real deployed browser workflow
 
-Commit `1b0c7b0187def302e860148a94e245b595c16db4`: PostgreSQL 16 backend suite **21 passed, 2 warnings in 4.88s**. Dependency consistency passed; no known Python vulnerabilities found. Frontend frozen installation, audit, and build passed.
+Signed in using private Alice code. Selected Harbor Library Retrofit, inspected both documents, generated the explicitly labeled fixture report. Confirmed Save was disabled before approval; approved through the human interface, saved and retried the same key. Report ID remained `626c1cca-67c6-4390-85df-bff4f4042929`. Screenshot: `deployed-demo.png` in the local deliverable.
 
-Run: https://github.com/TerezaZellerova/construction-scope-demo/actions/runs/38152774621
+A separate browser session signed in as Bob and showed only Cedar Primary School Extension. The first Alice browser attempt caught a CORS configuration update still deploying; it was rerun successfully after Render reported live.
 
-Free temporary Render PostgreSQL created, expires November 10, 2026. Vercel project created; neither application deployment nor deployed end-to-end workflow verified yet.
+No Render error-level logs were returned after verification. Direct SQL inspection through the hosted connector was blocked by the intentionally empty database IP allowlist; it was not widened. Same-report API/browser receipts and PostgreSQL concurrency tests establish retry behavior; direct production row counting was not performed.
+
+## Honest limits
+
+Fixture mode uses deterministic synthetic output, not a live AI response. OpenAI/Anthropic adapters have mocked tests but no independently verified live calls. No real InQI integration. MCP is verified stdio, with no public MCP HTTP endpoint or deployed ChatGPT/Claude app integration. Free backend sleeps after inactivity; free PostgreSQL expires November 10, 2026. No production SLA, automated backup/restore verification, or load testing. Invitation credentials represent fictional users; approval is not a verified legal signature.
